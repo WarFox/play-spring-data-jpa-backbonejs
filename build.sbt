@@ -1,27 +1,17 @@
-import sbt._
-import Keys._
-import play.Project._
+name := "play-spring-data-jpa"
 
-object ApplicationBuild extends Build {
+version := "1.0-SNAPSHOT"
 
-  val appName         = "play-spring-data-jpa"
-  val appVersion      = "1.0-SNAPSHOT"
+playJavaSettings
 
-  val appDependencies = Seq(
+ebeanEnabled := false
+
+libraryDependencies ++= Seq(
     javaCore,
     javaJpa,
-
     "org.springframework" % "spring-context" % "3.2.2.RELEASE",
     "javax.inject" % "javax.inject" % "1",
-
     "org.springframework.data" % "spring-data-jpa" % "1.3.2.RELEASE",
     "org.hibernate" % "hibernate-entitymanager" % "3.6.10.Final",
-
     "org.mockito" % "mockito-core" % "1.9.5" % "test"
-  )
-
-  val main = play.Project(appName, appVersion, appDependencies).settings(
-    ebeanEnabled := false
-  )
-
-}
+)
