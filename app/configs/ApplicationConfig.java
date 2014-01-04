@@ -13,6 +13,6 @@ import javax.inject.Singleton;
 @Named
 @Singleton
 @Configuration
-@ComponentScan({"controllers"})
+@ComponentScan({"controllers", "services"})
 public class ApplicationConfig {
 }
