@@ -1,8 +1,9 @@
 package controllers;
 
 import models.Person;
-import models.PersonRepository;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import repositories.PersonRepository;
 
 import javax.inject.Inject;
 import javax.inject.Named;
