@@ -1,6 +1,6 @@
 package configs;
 
 /**
- * Put all Spring config files in this class
+ * Put all Spring annotation config files in this package
  *
  **/
