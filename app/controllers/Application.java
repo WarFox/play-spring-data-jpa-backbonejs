@@ -1,8 +1,10 @@
 package controllers;
 
 import models.Person;
-import models.PersonRepository;
-import play.mvc.*;
+import play.mvc.Controller;
+import play.mvc.Result;
+import repositories.PersonRepository;
+import services.PersonService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -15,12 +17,12 @@ import javax.inject.Singleton;
 @Singleton
 public class Application extends Controller {
 
-    private final PersonRepository personRepository;
+    private final PersonService personService;
 
     // We are using constructor injection to receive a repository to support our desire for immutability.
     @Inject
-    public Application(final PersonRepository personRepository) {
-        this.personRepository = personRepository;
+    public Application(final PersonService personService) {
+        this.personService = personService;
     }
 
     public Result index() {
@@ -34,9 +36,9 @@ public class Application extends Controller {
         person.firstname = "Bruce";
         person.surname = "Smith";
 
-        final Person savedPerson = personRepository.save(person);
+        final Person savedPerson = personService.save(person);
 
-        final Person retrievedPerson = personRepository.findOne(savedPerson.id);
+        final Person retrievedPerson = personService.findOne(savedPerson.id);
 
         // Deliver the index page with a message showing the id that was generated.
 

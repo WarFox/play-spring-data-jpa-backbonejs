@@ -1,26 +1,11 @@
-
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.hibernate3.HibernateExceptionTranslator;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import play.Application;
 import play.GlobalSettings;
 
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
 /**
- * Application wide behaviour. We establish a Spring application context for the dependency injection system and
- * configure Spring Data.
+ * Application wide behaviour. We establish a Spring application context for the dependency injection system
  */
 public class Global extends GlobalSettings {
-
-    /**
-     * The name of the persistence unit we will be using.
-     */
-    static final String DEFAULT_PERSISTENCE_UNIT = "default";
 
     /**
      * Declare the application context to be used - a Java annotation based application context requiring no XML.
@@ -34,11 +19,12 @@ public class Global extends GlobalSettings {
     public void onStart(final Application app) {
         super.onStart(app);
 
+        // Scan configs package for annotation based configurations @Configuration
+        ctx.scan("configs");
+
         // AnnotationConfigApplicationContext can only be refreshed once, but we do it here even though this method
         // can be called multiple times. The reason for doing during startup is so that the Play configuration is
         // entirely available to this application context.
-        ctx.register(SpringDataJpaConfiguration.class);
-        ctx.scan("controllers", "models");
         ctx.refresh();
 
         // This will construct the beans and call any construction lifecycle methods e.g. @PostConstruct
@@ -65,26 +51,4 @@ public class Global extends GlobalSettings {
         return ctx.getBean(aClass);
     }
 
-    /**
-     * This configuration establishes Spring Data concerns including those of JPA.
-     */
-    @Configuration
-    @EnableJpaRepositories("models")
-    public static class SpringDataJpaConfiguration {
-
-        @Bean
-        public EntityManagerFactory entityManagerFactory() {
-            return Persistence.createEntityManagerFactory(DEFAULT_PERSISTENCE_UNIT);
-        }
-
-        @Bean
-        public HibernateExceptionTranslator hibernateExceptionTranslator() {
-            return new HibernateExceptionTranslator();
-        }
-
-        @Bean
-        public JpaTransactionManager transactionManager() {
-            return new JpaTransactionManager();
-        }
-    }
 }
