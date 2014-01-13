@@ -6,5 +6,9 @@
 # will call on the GlobalSettings.getController method to resolve the actual controller instance.
 GET     /                           @controllers.Application.index
 
+GET     /people                     @controllers.PeopleController.list
+GET     /people/:id                 @controllers.PeopleController.get(id: Long)
+POST    /people                     @controllers.PeopleController.newPerson
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

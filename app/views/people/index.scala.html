@@ -1,0 +1,18 @@
+@(message: String)
+
+@main(message) {
+
+<form action="/people" method="post">
+    <label for="firstname">First Name</label>
+    <input type="text" name="firstname" id="firstname"/>
+
+    <br/>
+
+    <label for="surname">Sur Name</label>
+    <input type="text" name="surname" id="surname"/>
+
+    <br/>
+    <button type="submit">submit</button>
+</form>
+
+}
