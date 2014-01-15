@@ -4,10 +4,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Person;
 import play.Logger;
-import play.libs.Json;
-import play.mvc.Result;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Result;
 import services.PersonService;
 
 import javax.inject.Inject;
@@ -51,7 +51,7 @@ public class PeopleController extends Controller {
      */
     public Result newPerson() {
         Form<Person> personForm = Form.form(Person.class).bindFromRequest();
-        if(personForm.hasErrors()) {
+        if (personForm.hasErrors()) {
             Logger.info("has errors" + personForm.errorsAsJson());
         }
         Person person = personForm.get();
@@ -61,7 +61,39 @@ public class PeopleController extends Controller {
         ObjectNode result = Json.newObject();
         result.put("data", jsonNode);
         result.put("status", "OK");
+        return created(result);
+    }
+
+    /**
+     * Update person with given id
+     *
+     * @param id Person id
+     */
+    public Result updatePerson(Long id) {
+        Form<Person> personForm = Form.form(Person.class).bindFromRequest();
+        if (personForm.hasErrors()) {
+            Logger.info("has errors" + personForm.errorsAsJson());
+        }
+        Person person = personForm.get();
+        person.id = id;
+        person = personService.save(person);
+
+        JsonNode jsonNode = Json.toJson(person);
+        ObjectNode result = Json.newObject();
+        result.put("data", jsonNode);
+        result.put("status", "OK");
+
         return ok(result);
+    }
+
+    /**
+     * Delete person with given id
+     *
+     * @param id Person id
+     */
+    public Result delete(Long id) {
+        personService.delete(id);
+        return ok();
     }
 
 }

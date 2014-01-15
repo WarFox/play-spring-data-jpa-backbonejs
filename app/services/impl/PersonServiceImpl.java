@@ -41,6 +41,11 @@ public class PersonServiceImpl implements PersonService {
         return iterableToList(personRepository.findAll());
     }
 
+    @Override
+    public void delete(Long id) {
+        personRepository.delete(personRepository.findOne(id));
+    }
+
     private List<Person> iterableToList(Iterable<Person> iterable) {
         List<Person> list = new ArrayList<Person>();
         Iterator<Person> iterator = iterable.iterator();
