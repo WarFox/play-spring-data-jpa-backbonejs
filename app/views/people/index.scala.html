@@ -2,17 +2,63 @@
 
 @main(message) {
 
-<form action="/people" method="post">
-    <label for="firstname">First Name</label>
-    <input type="text" name="firstname" id="firstname"/>
+<div class='container'>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">Add New Person</div>
+            </div>
+            <div id="addPersonView" class="panel-body">
+                <script type='text/template' id='addPersonTemplate'>
+                    <form id='frmAddPerson' class="form form-inline" role="form">
+                        <input type='hidden' id='id' class='input'/>
 
-    <br/>
+                        <div class="form-group">
+                            <label for="firstname" class="control-label">First Name:</label>
+                            <input type='text' id='firstname' class='form-control input-sm'/> <br/>
+                        </div>
 
-    <label for="surname">Sur Name</label>
-    <input type="text" name="surname" id="surname"/>
+                        <div class="form-group">
+                            <label for="surname" class="control-label">Surname:</label>
+                            <input type='text' id='surname' class='form-control'/> <br/>
+                        </div>
 
-    <br/>
-    <button type="submit">submit</button>
-</form>
+                        <button type='button' class="btn btn-default" id="newPerson">Save Person Details</button>
+                    </form>
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <div class="panel-title">List People</div>
+            </div>
+            <div class="table-responsive">
+            <table id="peopleList" class="table table-hover table-striped table-condensed">
+                <tbody>
+                <script type="text/template" id="personTemplate">
+                        <td>
+                            <span class="view">
+                                <%= id %>. <%= firstname %>&nbsp;<%= surname %>
+                            </span>
+
+                            <input class="firstname edit" value="<%= firstname %>" />
+                            <input class="surname edit" value="<%= surname %>" />
+
+                            <span class="pull-right">
+                                <button class="btn btn-sm btn-danger remove-btn">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </span>    
+                        </td>
+                </script>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 }
