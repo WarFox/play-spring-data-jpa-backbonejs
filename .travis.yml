@@ -9,4 +9,4 @@ deploy:
   app: play-spring-data-jpa-backbone
   on:
     repo: WarFox/play-spring-data-jpa-backbonejs
-    branch: travis-config
+    branch: master
