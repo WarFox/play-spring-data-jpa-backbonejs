@@ -24,6 +24,15 @@
                         </div>
 
                         <button type='button' class="btn btn-default" id="newPerson">Save Person Details</button>
+
+                        <% if (typeof(message) != "undefined") { %>
+                        <br/><br/>
+
+                        <div class="alert alert-warning alert-dismissable">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <span class="text-danger"><%= message %></span>
+                        </div>
+                        <% } %>
                     </form>
                 </script>
             </div>
@@ -35,26 +44,26 @@
                 <div class="panel-title">List People</div>
             </div>
             <div class="table-responsive">
-            <table id="peopleList" class="table table-hover table-striped table-condensed">
-                <tbody>
-                <script type="text/template" id="personTemplate">
+                <table id="peopleList" class="table table-hover table-striped table-condensed">
+                    <tbody>
+                    <script type="text/template" id="personTemplate">
                         <td>
                             <span class="view">
-                                <%= id %>. <%= firstname %>&nbsp;<%= surname %>
+                                <%= firstname %>&nbsp;<%= surname %>
                             </span>
 
-                            <input class="firstname edit" value="<%= firstname %>" />
-                            <input class="surname edit" value="<%= surname %>" />
+                            <input class="firstname edit" value="<%= firstname %>"/>
+                            <input class="surname edit" value="<%= surname %>"/>
 
                             <span class="pull-right">
                                 <button class="btn btn-sm btn-danger remove-btn">
                                     <span class="glyphicon glyphicon-remove"></span>
                                 </button>
-                            </span>    
+                            </span>
                         </td>
-                </script>
-                </tbody>
-            </table>
+                    </script>
+                    </tbody>
+                </table>
             </div>
         </div>
 
