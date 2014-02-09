@@ -6,7 +6,9 @@ var MyApp = MyApp || {};
         el:'div#addPersonView',
         events:{
             'keypress #surname':'createOnEnter',
-            'click button#newPerson':'createPerson'
+            'click button#newPerson':'createPerson',
+            'keypress #firstname':'clearAlerts',
+            'blur #firstname':'clearAlerts'
         },
         template:_.template($('#addPersonTemplate').html()),
         initialize:function () {
@@ -29,8 +31,8 @@ var MyApp = MyApp || {};
             MyApp.people.fetch({reset:true});
         },
         // render addPersonTemplate and return this
-        render:function () {
-            this.$el.html(this.template());
+        render:function (alertMessage) {
+            this.$el.html(this.template({message:alertMessage}));
 
             this.$firstname = this.$('#firstname');
             this.$surname = this.$('#surname');
@@ -39,11 +41,17 @@ var MyApp = MyApp || {};
         // persist data using people collection .create()
         createPerson:function () {
             var self = this;
-            MyApp.people.create(this.newPerson(), {
-                success:function () {
-                    self.clearInputs();
-                }
-            });
+            var newPerson = this.newPerson();
+            if (newPerson) {
+                MyApp.people.create(newPerson, {
+                    success:function () {
+                        self.clearInputs();
+                    },
+                    error:function () {
+
+                    }
+                });
+            }
         },
         clearInputs:function () {
             this.$firstname.val('');
@@ -57,16 +65,28 @@ var MyApp = MyApp || {};
             }
         },
         newPerson:function () {
-            return {
-                firstname:this.$firstname.val().trim(),
-                surname:this.$surname.val().trim()
-            };
+            var trimmedFirstName = this.$firstname.val().trim();
+            var trimmedLastName = this.$surname.val().trim();
+            if (trimmedFirstName || trimmedLastName) {
+                return {
+                    firstname:trimmedFirstName,
+                    surname:trimmedLastName
+                };
+            }
+            this.showAlert("First name and last name cannot be blank, please enter either one of them");
+            return false;
+        },
+        showAlert:function (alertMessage) {
+            this.render(alertMessage);
+            this.clearInputs();
+        },
+        clearAlerts:function () {
+            $('.alert').alert('close');
         },
         // adds person to list view
         addPerson:function (person) {
             var view = new MyApp.personView({ model:person});
             this.$list.append(view.render().el);
-            console.log(person);
             return false;
         },
         // Add all items in the people collection at once to view.
