@@ -1,0 +1,12 @@
+language: scala
+jdk:
+- oraclejdk7
+- openjdk6
+deploy:
+  provider: heroku
+  api_key:
+    secure: biXfppXKnhG7mYsxDdujoytnbvCsGttx0kwxYxPgjmgx2jmMEdxfwJ3R1vDSCjkl4IXs52X/LEvE/TTunCrhCiZ5VdHFwxNmpDrc4DinF0RMm8LXnbvNs3vWliVKnm1DRH7Afa+/U9gE+1t3YnGXMNDOptJ/QygkT2EUkW7OK38=
+  app: play-spring-data-jpa-backbone
+  on:
+    repo: WarFox/play-spring-data-jpa-backbonejs
+    branch: travis-config
