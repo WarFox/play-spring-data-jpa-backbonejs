@@ -1,7 +1,6 @@
 package controllers;
 
 import models.Person;
-import repositories.PersonRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,9 +9,12 @@ import org.mockito.runners.MockitoJUnitRunner;
 import play.GlobalSettings;
 import play.mvc.Result;
 import play.test.WithApplication;
+import services.PersonService;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
 import static play.test.Helpers.*;
 
 /**
@@ -23,16 +25,15 @@ import static play.test.Helpers.*;
 public class ApplicationIT extends WithApplication {
 
     private static final Long SOME_ID = 1L;
-    private static final CharSequence SOME_CONTENT_MESSAGE = "Found id: 1 of person/people";
 
-    private Application app;
+    private PeopleController app;
 
     @Mock
-    private PersonRepository repo;
+    private PersonService personService;
 
     @Before
     public void setUp() throws Exception {
-        app = new Application(repo);
+        app = new PeopleController(personService);
 
         final GlobalSettings global = new GlobalSettings() {
             @Override
@@ -48,13 +49,14 @@ public class ApplicationIT extends WithApplication {
     public void indexSavesDataAndReturnsId() {
         final Person person = new Person();
         person.id = SOME_ID;
-        when(repo.save(any(Person.class))).thenReturn(person);
-        when(repo.findOne(SOME_ID)).thenReturn(person);
+        when(personService.save(any(Person.class))).thenReturn(person);
+        when(personService.findOne(SOME_ID)).thenReturn(person);
 
-        final Result result = route(fakeRequest(GET, "/"));
+        final Result result = route(fakeRequest(GET, "/people"));
 
         assertEquals(OK, status(result));
-        assertTrue(contentAsString(result).contains(SOME_CONTENT_MESSAGE));
+        assertTrue(contentAsString(result).contains("data"));
+        assertTrue(contentAsString(result).contains("status"));
     }
 
 }
