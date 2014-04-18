@@ -1,7 +1,7 @@
 package repositories;
 
 import models.Person;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -12,5 +12,5 @@ import javax.inject.Singleton;
  */
 @Named
 @Singleton
-public interface PersonRepository extends CrudRepository<Person, Long> {
+public interface PersonRepository extends PagingAndSortingRepository<Person, Long> {
 }
