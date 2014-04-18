@@ -1,4 +1,4 @@
-name := "play-spring-data-jpa"
+name := "play-spring-data-jpa-backbonejs"
 
 version := "1.0-SNAPSHOT"
 
