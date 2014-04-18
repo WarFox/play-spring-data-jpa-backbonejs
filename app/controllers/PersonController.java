@@ -100,6 +100,7 @@ public class PersonController extends Controller {
 
     private List<Person> iterableToList(Iterable<Person> iterable) {
         List<Person> list = new ArrayList<Person>();
+        if(iterable == null) return list;
         Iterator<Person> iterator = iterable.iterator();
         while (iterator.hasNext()) {
             list.add(iterator.next());
