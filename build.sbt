@@ -2,7 +2,7 @@ name := "play-spring-data-jpa-backbonejs"
 
 version := "1.0-SNAPSHOT"
 
-playJavaSettings
+play.Project.playJavaSettings
 
 ebeanEnabled := false
 

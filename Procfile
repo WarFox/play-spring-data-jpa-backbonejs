@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/play-spring-data-jpa -Dhttp.port=${PORT} -DapplyEvolutions.default=true 
+web: target/universal/stage/bin/play-spring-data-jpa-backbonejs -Dhttp.port=${PORT} -DapplyEvolutions.default=true
