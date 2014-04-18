@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 @Singleton
 public class Application extends Controller {
 
-    public Result index() {
+    public static Result index() {
         return ok(views.html.people.index.render("play-spring-data-jpa-backbonejs"));
     }
 }
