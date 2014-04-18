@@ -8,11 +8,13 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import services.PersonService;
+import repositories.PersonRepository;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -22,16 +24,16 @@ import java.util.List;
 @Singleton
 public class PersonController extends Controller {
 
-    // We are using constructor injection to receive a service to support our desire for immutability.
-    private final PersonService personService;
+    // We are using constructor injection to receive repository to support our desire for immutability.
+    private final PersonRepository personRepository;
 
     @Inject
-    public PersonController(PersonService personService) {
-        this.personService = personService;
+    public PersonController(PersonRepository personRepository) {
+        this.personRepository = personRepository;
     }
 
     public Result list() {
-        List<Person> people = personService.findAll();
+        List<Person> people = iterableToList(personRepository.findAll());
         ObjectNode result = Json.newObject();
         result.put("data", Json.toJson(people));
         result.put("status", "OK");
@@ -39,7 +41,7 @@ public class PersonController extends Controller {
     }
 
     public Result get(Long id) {
-        JsonNode jsonNode = Json.toJson(personService.findOne(id));
+        JsonNode jsonNode = Json.toJson(personRepository.findOne(id));
         ObjectNode result = Json.newObject();
         result.put("data", jsonNode);
         result.put("status", "OK");
@@ -55,7 +57,7 @@ public class PersonController extends Controller {
             Logger.info("has errors" + personForm.errorsAsJson());
         }
         Person person = personForm.get();
-        person = personService.save(person);
+        person = personRepository.save(person);
 
         JsonNode jsonNode = Json.toJson(person);
         ObjectNode result = Json.newObject();
@@ -76,7 +78,7 @@ public class PersonController extends Controller {
         }
         Person person = personForm.get();
         person.id = id;
-        person = personService.save(person);
+        person = personRepository.save(person);
 
         JsonNode jsonNode = Json.toJson(person);
         ObjectNode result = Json.newObject();
@@ -92,8 +94,17 @@ public class PersonController extends Controller {
      * @param id Person id
      */
     public Result delete(Long id) {
-        personService.delete(id);
+        personRepository.delete(id);
         return ok();
+    }
+
+    private List<Person> iterableToList(Iterable<Person> iterable) {
+        List<Person> list = new ArrayList<Person>();
+        Iterator<Person> iterator = iterable.iterator();
+        while (iterator.hasNext()) {
+            list.add(iterator.next());
+        }
+        return list;
     }
 
 }
