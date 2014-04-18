@@ -26,14 +26,14 @@ public class ApplicationIT extends WithApplication {
 
     private static final Long SOME_ID = 1L;
 
-    private PeopleController app;
+    private PersonController app;
 
     @Mock
     private PersonService personService;
 
     @Before
     public void setUp() throws Exception {
-        app = new PeopleController(personService);
+        app = new PersonController(personService);
 
         final GlobalSettings global = new GlobalSettings() {
             @Override

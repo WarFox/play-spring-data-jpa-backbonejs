@@ -20,13 +20,13 @@ import java.util.List;
  */
 @Named
 @Singleton
-public class PeopleController extends Controller {
+public class PersonController extends Controller {
 
     // We are using constructor injection to receive a service to support our desire for immutability.
     private final PersonService personService;
 
     @Inject
-    public PeopleController(PersonService personService) {
+    public PersonController(PersonService personService) {
         this.personService = personService;
     }
 

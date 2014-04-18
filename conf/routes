@@ -6,11 +6,11 @@
 # will call on the GlobalSettings.getController method to resolve the actual controller instance.
 GET     /                           controllers.Application.index
 
-GET     /people                     @controllers.PeopleController.list
-GET     /people/:id                 @controllers.PeopleController.get(id: Long)
-POST    /people                     @controllers.PeopleController.newPerson
-PUT     /people/:id                 @controllers.PeopleController.updatePerson(id: Long)
-DELETE  /people/:id                 @controllers.PeopleController.delete(id: Long)
+GET     /people                     @controllers.PersonController.list
+GET     /people/:id                 @controllers.PersonController.get(id: Long)
+POST    /people                     @controllers.PersonController.newPerson
+PUT     /people/:id                 @controllers.PersonController.updatePerson(id: Long)
+DELETE  /people/:id                 @controllers.PersonController.delete(id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
